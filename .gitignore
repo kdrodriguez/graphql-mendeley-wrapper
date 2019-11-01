@@ -45,6 +45,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+nbproject/
 
 # TypeScript v1 declaration files
 typings/
@@ -120,5 +121,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+/scr/DataBase/cnn.js
 
 # End of https://www.gitignore.io/api/node,windows
