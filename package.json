@@ -1,0 +1,28 @@
+{
+  "name": "graphql-server-mendeley",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node scr/server.js"
+  },
+  "keywords": [],
+  "author": "Kevin Rodriguez",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-graphql": "^0.8.0",
+    "graphql": "^14.3.1",
+    "graphql-server-express": "^1.4.0",
+    "graphql-tools": "^4.0.4",
+    "graphql-yoga": "^1.17.4",
+    "node-fetch": "^2.3.0",
+    "nunjucks": "^3.2.0",
+    "pg": "^7.12.1",
+    "pg-promise": "^8.7.4"
+  }
+}

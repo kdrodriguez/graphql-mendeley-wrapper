@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- DE PRUEBA -->
+  <script type="text/javascript">
+      function operacion(){
+        var token = document.getElementById("token").value;
+        location.href = "http://localhost:4000/" + "?token=" + token;
+    }
+  </script>
+  <!-- DE PRUEBA -->
+
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Pagina de la API GraphQL de Mendeley</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/one-page-wonder.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <header class="masthead text-center text-white">
+    <div class="masthead-content">
+      <div class="container">
+        <h2 class="masthead-heading mb-0">MENDELEY</h12>
+        <h3 class="masthead-subheading mb-0">API GraphQL</h3>
+        <a href="playground" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API</a>
+        
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http://localhost:4000/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session</a>
+
+        <form action="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http://localhost:4000/playground&response_type=token&scope=all&state=692055100728.786">
+          <button type="submit" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API sessionForm</button>
+        </form >
+         <!-- DE PRUEBA -->
+         <form id="forma1" action="/myaction" method="post"> 
+                <input type="text" id="token" name="token"></input>
+                <input type="submit" id="enviar" value="enviar"></input>
+         </form>
+          <!-- DE PRUEBA -->
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid" src="img/mendeley-graphql.png" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">Acerca</h2>
+            <p>La API GraphQL de Mendeley permite a la comunidad de desarrolladores implementar soluciones tecnológicas usando los servicios que brinda el gestor por medio del lenguaje de consultas GraphQL. Actualmente, Mendeley tiene una API Rest para brindar estos servicios, la API GraphQL usa estos servicios para generar nuevos servicios GraphQL, puede consultar más a detalle la API Rest en la <a href="https://dev.mendeley.com/" target="_blank" >página oficial de desarrollo de Mendeley</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="p-5">
+            <img class="img-fluid" src="img/query-example.png" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="p-5">
+            <h2 class="display-4">Como usar</h2>
+            <p>Para usar la API GraphQL de Mendeley, necesita disponer de una cuenta de usuario, si no cuenta con una puede revisar la <a href="https://www.mendeley.com/" target="_blank">página oficial de Mendeley</a> para ver las opciones de registro. Puede crear consultas personalizadas usando la específicación GraphQL; para más información de GraphQL, visite su página oficial <a href="https://graphql.org/" target="_blank">aquí</a>. Descargue el manual de usu de la API <a href="#">aquí</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid" src="img/graphql-playground.png" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4">IDE GraphQL Playground</h2>
+            <p>Haga consultas personalizadas con el IDE gráfico e interactivo <a href="playground"> GraphQL Playground </a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="p-5">
+            <img class="img-fluid" src="img/Actividad.jpg" alt="">
+            <small> 
+            Imagen de <a href="https://pixabay.com/es/users/kreatikar-8562930/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3411311">Mudassar Iqbal</a> en <a href="https://pixabay.com/es/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3411311">Pixabay</a></small>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="p-5">
+            <h2 class="display-4">Actividad de la API</h2>
+            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="http://localhost:4001/activity">Ir al detalle de actividad</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-3 bg-black">
+    <div class="container">
+      <p class="m-0 text-center text-white small">Copyright &copy; UTN-CISIC GraphQL's Project 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

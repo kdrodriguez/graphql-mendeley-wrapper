@@ -1,0 +1,10 @@
+type File{
+  catalog_id: String
+  created: String
+  document_id: String
+  file_name: String
+  filehash: String
+  id: String
+  mime_type: String
+  size: Int
+}

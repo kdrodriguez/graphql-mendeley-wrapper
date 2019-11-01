@@ -1,0 +1,13 @@
+type Query{
+  documents: [Document]
+  documentsFolder(folder_id: String!): [Document]
+  document(id: String!): Document
+  document_types: [Document_types]
+  document_identifiers_types: [Document_identifier_types]
+  files: [File]
+  file(id: String!): File
+  folders: [Folder]
+  folder(id: String!): Folder
+  groups: [Group]
+  group(id: String!): Group 
+}

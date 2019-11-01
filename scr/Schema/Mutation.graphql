@@ -1,0 +1,9 @@
+type Mutation{
+    createDocument(document: DocumentInput!): Document!
+    createFolder(folder: FolderInput!): Folder!
+    createGroup(group: GroupInput!): Group!
+
+    updateDocument(id: String!, document: DocumentInput!): Document!
+    updateFolder(id: String!, folder: FolderInput!): Folder!
+    updateGroup(id: String!, group: GroupInput!): Group!
+}

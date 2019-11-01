@@ -1,0 +1,40 @@
+type Document_types{
+  description: String
+  name: String
+}
+
+type Document_identifier_types{
+  description: String
+  name: String
+}
+
+type Person{
+  first_name: String
+  last_name: String!
+  scopus_author_id: String
+}
+
+input PersonInput{
+  first_name: String
+  last_name: String!
+  scopus_author_id: String
+}
+
+type UUID{
+  leastSignificantBits: Int
+  mostSignificantBits: Int
+}
+
+type Photo{
+  original: String
+  photo_uuid: String
+  square: String
+  standard: String
+}
+
+input PhotoInput{
+  original: String
+  photo_uuid: String
+  square: String
+  standard: String
+}

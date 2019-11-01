@@ -1,0 +1,70 @@
+type Document{
+  abstract: String
+  accessed: String
+  authored: Boolean
+  authors: [Person!]
+  chapter: String
+  citation_key: String
+  city: String
+  code: String
+  confirmed: Boolean
+  country: String
+  created: String
+  day: Int
+  department: String
+  edition: String
+  editors: [Person!]
+  file_attached: Boolean
+  folder_uuids: [UUID!]
+  genre: String
+  group_id: String
+  hidden: Boolean
+  id: String
+  identifiers: [String!]
+  institution: String
+  issue: String
+  keywords: [String!]
+  language: String
+  last_modified: String
+  medium: String
+  month: Int
+  notes: String
+  pages: String
+  patent_application_number: String
+  patent_legal_status: String
+  patent_owner: String
+  private_publication: Boolean
+  profile_id: String
+  publisher: String
+  read: Boolean
+  reprint_edition: String
+  revision: String
+  series: String
+  series_editor: String
+  series_number: String
+  short_title: String
+  source: String
+  source_type: String
+  starred: Boolean
+  tags: [String!]
+  title: String!
+  translators: [Person!]
+  type: String
+  user_context: String
+  volume: String
+  websites: [String!]
+  year: Int
+}
+
+input DocumentInput{
+  abstract: String
+  authors: [PersonInput!]
+  group_id: String
+  identifiers: [String!]
+  keywords: [String!]
+  source: String
+  title: String!
+  type: String!
+  year: Int
+  #Campos por default: id, created, profile_id y last_modified
+}
