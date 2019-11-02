@@ -13,7 +13,8 @@ const resolvers = require('./Resolvers/');
 const { pool } = require("../scr/DataBase/cnn");
 
 const server = new GraphQLServer({
-  typeDefs: './Schema/schema.graphql',
+  //typeDefs: './Schema/schema.graphql',
+  typeDefs: '../scr/Schema/schema.graphql',
   resolvers,
   headers: {
     "Access-Control-Allow-Origin": "*" // Required for CORS support to work
