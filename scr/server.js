@@ -13,8 +13,8 @@ const resolvers = require('./Resolvers/');
 const { pool } = require("../scr/DataBase/cnn");
 
 const server = new GraphQLServer({
-  //typeDefs: './Schema/schema.graphql',  // DEV
-  typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
+  typeDefs: './Schema/schema.graphql',  // DEV
+  //typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
   resolvers,
   headers: {
     "Access-Control-Allow-Origin": "*" // Required for CORS support to work
@@ -70,7 +70,7 @@ server.get('/confirmAuth', function (req, res) {
   res.sendFile(__dirname + '/public/confirmAuth.html');
 });
 
-app.get('/activity', function (req, response) {
+app.get('/Activity', function (req, response) {
   //res.sendFile(__dirname+"/public/activity.html");
   const queryOperation = 'SELECT public.user.display_name_user, operation_action.type_resource, operation_action.type_operation, operation_action.graphql_operation FROM operation_action JOIN public.user ON (operation_action.id_user = public.user.id_user) ORDER BY type_resource';
   const queryOperationMonths = "select case EXTRACT(MONTH FROM operation_date) " +
@@ -136,7 +136,7 @@ app.get('/activity', function (req, response) {
                             rec_pro++;
         });
 
-        response.render('activity.html', {
+        response.render('Activity.html', {
           activityData: res.rows,
           userData: res2.rows,
           totalUsers: res2.rows.length,
@@ -169,13 +169,6 @@ server.post('/myaction', function (req, res) {
   token = req.body.token
   res.send('You sent the name "' + req.body.token + '".');
 });
-
-//context: ({ response, ...rest }) => {
-//      return {  
-//          response, 
-//           Hola: 'aaaaa'
-//       };
-//      },
 
 const FRONTEND_HOST = "";
 const origin = `http://${FRONTEND_HOST}:4000`;
