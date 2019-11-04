@@ -52,7 +52,7 @@ var app = express();
 nunjucks.configure(__dirname + '/public', {
   express: app
 });
-app.listen(4001);
+app.listen(process.env.PORT || 4001);
 app.use(express.static(__dirname + '/public'))
 server.express.use(cookieParser())
 
