@@ -13,26 +13,17 @@ const resolvers = require('./Resolvers/');
 const { pool } = require("../scr/DataBase/cnn");
 
 const server = new GraphQLServer({
-  //typeDefs: './Schema/schema.graphql',
-  typeDefs: 'scr/Schema/schema.graphql',
-  //typeDefs: '/scr/Schema/schema.graphql',
-  //typeDefs: __dirname+'/Schema/schema.graphql', avoid
-  //typeDefs: '../scr/Schema/schema.graphql',
-  //typeDefs: '/schema.graphql',
+  //typeDefs: './Schema/schema.graphql',  // DEV
+  typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
   resolvers,
   headers: {
     "Access-Control-Allow-Origin": "*" // Required for CORS support to work
   },
   /*context: ({ response, ...rest }) => {
-    //var params = url.parse(request.url,true).query;
-    //  console.log(params.token);
-    return {
-      access_token: "ffff"
-    };
-  },
-  context: ({ response, ...rest }) => {
+    //var params = url.parse(request.url,true).query;  console.log(params.token);
     return {
       response,
+      access_token: "ffff"
       Hola: 'aaaaa'
     };
   },*/
@@ -47,12 +38,11 @@ const server = new GraphQLServer({
 server.use(body_parser.urlencoded({ extended: true }));
 
 var express = require('express');
-var app = express();
-//var app1 = server.express();  // ------------------------ ************//////////////
+var app = server.express;
 nunjucks.configure(__dirname + '/public', {
   express: app
 });
-app.listen(process.env.PORT || 4001);
+//app.listen(process.env.PORT || 4001);
 app.use(express.static(__dirname + '/public'))
 server.express.use(cookieParser())
 
