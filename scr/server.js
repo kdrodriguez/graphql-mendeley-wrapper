@@ -192,7 +192,7 @@ const origin = `http://${FRONTEND_HOST}:4000`;
 
 const options = {
   //cors: { credentials: true, origin },
-  port: 4000,
+  port: process.env.PORT || 4000,
   endpoint: '/mendeley-graphql',
   playground: '/playground',
 }
