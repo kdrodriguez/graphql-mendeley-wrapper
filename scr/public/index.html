@@ -3,17 +3,6 @@
 
 <head>
 
-    <!-- DE PRUEBA -->
-  <script type="text/javascript">
-      function operacion(){
-        var token = document.getElementById("token").value;
-        location.href = "http://localhost:4000/" + "?token=" + token;
-    }
-  </script>
-  <!-- DE PRUEBA -->
-
-
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -40,16 +29,9 @@
       <div class="container">
         <h2 class="masthead-heading mb-0">MENDELEY</h12>
         <h3 class="masthead-subheading mb-0">API GraphQL</h3>
-        <a href="playground" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API</a>
-        
-        <a href="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http://localhost:4000/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session Local</a>
-        <a href="https://api.mendeley.com/oauth/authorize?client_id=7540&redirect_uri=https://graphql-mendeley.herokuapp.com/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session Nube</a>
-         <!-- DE PRUEBA -->
-         <form id="forma1" action="/myaction" method="post"> 
-                <input type="text" id="token" name="token"></input>
-                <input type="submit" id="enviar" value="enviar"></input>
-         </form>
-          <!-- DE PRUEBA -->
+        <a href="playground" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API</a> 
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http://localhost:4000/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session DEV</a>
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=7540&redirect_uri=https://graphql-mendeley.herokuapp.com/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session PROD</a>
       </div>
     </div>
   </header>
@@ -121,9 +103,8 @@
         <div class="col-lg-6">
           <div class="p-5">
             <h2 class="display-4">Actividad de la API</h2>
-            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="http://localhost:4001/activity">Ir al detalle de actividad</a></p>
-            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="activity">Ir al detalle de actividad /ACTIVITY</a></p>
-            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="https://graphql-mendeley.herokuapp.com//activity">Ir al detalle de actividad /HTTP...../ACTIVITY</a></p>
+            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="http://localhost:4000/activity">Ir al detalle de actividad DEV</a></p>
+            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="activity">Ir al detalle de actividad PROD</a></p>
           </div>
         </div>
       </div>

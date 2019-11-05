@@ -13,8 +13,8 @@ const resolvers = require('./Resolvers/');
 const { pool } = require("../scr/DataBase/cnn");
 
 const server = new GraphQLServer({
-  //typeDefs: './Schema/schema.graphql',  // DEV
-  typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
+  typeDefs: './Schema/schema.graphql',  // DEV
+  //typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
   resolvers,
   headers: {
     "Access-Control-Allow-Origin": "*" // Required for CORS support to work
@@ -163,11 +163,6 @@ app.get('/Activity', function (req, response) {
     })
     // pool.end()
   })
-});
-
-server.post('/myaction', function (req, res) {
-  token = req.body.token
-  res.send('You sent the name "' + req.body.token + '".');
 });
 
 const FRONTEND_HOST = "";
