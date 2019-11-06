@@ -1,95 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title>fdfd</title>
-	<script>
-		var token_temp;
+  <title>GraphQL Mendeley API Activity</title>
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link
+    href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+  <!-- FontAwesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.8.2/js/all.js"
+    integrity="sha384-DJ25uNYET2XCl5ZF++U8eNxPWqcKohUUBUpKGlNLMchM7q4Wjg2CUpjHLaL8yYPH"
+    crossorigin="anonymous"></script>
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="assets/plugins/elegant_font/css/style.css">
+  <!-- Theme CSS -->
+  <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-		//Método para extraer el token de la url de devolución proporcionada por la API
-		function getToken() {
-			var params = {}, queryString = location.hash.substring(1),
-				regex = /([^&=]+)=([^&]*)/g, m;
-			while (m = regex.exec(queryString)) {
-				params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-			}
-			//state = params.state;
-			token_temp = params.access_token;
-			return params.access_token;
-		}
+  <script>
+    var token_temp;
 
-		// Método que almacena el token en una cookie
-		function setCookie() {
-			var d = new Date();
-			d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
-			var expires = "expires=" + d.toUTCString();
-			console.log("token=" + token_temp + ";" + expires + ";path=/");
-			document.cookie = "token=" + token_temp + ";" + expires + ";path=/";
-		}
+    //Método para extraer el token de la url de devolución proporcionada por la API
+    function getToken() {
+      var params = {}, queryString = location.hash.substring(1),
+        regex = /([^&=]+)=([^&]*)/g, m;
+      while (m = regex.exec(queryString)) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+      }
+      //state = params.state;
+      token_temp = params.access_token;
+      return params.access_token;
+    }
 
-		// Método para leer una cookie (NO es usado en la app)
-		function getCookie(cname) {
-			var name = cname + "=";
-			var ca = document.cookie.split(';');
-			for (var i = 0; i < ca.length; i++) {
-				var c = ca[i];
-				while (c.charAt(0) == ' ') {
-					c = c.substring(1);
-				}
-				if (c.indexOf(name) == 0) {
-					return c.substring(name.length, c.length);
-				}
-			}
-			return "";
-		}
+    // Método que almacena el token en una cookie
+    function setCookie() {
+      var d = new Date();
+      d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + d.toUTCString();
+      console.log("token=" + token_temp + ";" + expires + ";path=/");
+      document.cookie = "token=" + token_temp + ";" + expires + ";path=/";
+      alert("Token guardado");
+    }
 
-		// Método para verificar si una cookie existe
-		function checkCookie() {
-			var token = getCookie("token");
-			if (token != "") {
-				alert("token cookie: " + token);
-			} else {
-				alert("No existe la cookie" );
-				/*token = prompt("Please enter your cookie token:", "");
-				if (token != "" && token != null) {
-					setCookie("token", token, 365);
-				}*/
-			}
-		}
+    // Método para leer una cookie (NO es usado en la app)
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
 
-	</script>
+    // Método para verificar si una cookie existe
+    function checkCookie() {
+      var token = getCookie("token");
+      if (token != "") {
+        alert("token cookie: " + token);
+      } else {
+        alert("No existe la cookie" );
+        /*token = prompt("Please enter your cookie token:", "");
+        if (token != "" && token != null) {
+          setCookie("token", token, 365);
+        }*/
+      }
+    }
+
+  </script>
+
 </head>
 
-<body onload="getToken();">
+<body class="body-pink" onload="getToken();">
+  <div class="page-wrapper">
+    <!-- ******Header****** -->
+    <header id="header" class="header">
+      <div class="container">
+        <div class="branding">
+          <h1 class="logo">
+            <a href="index.html">
+              <span aria-hidden="true" class="icon_documents_alt icon"></span>
+              <span class="text-highlight">API-</span><span class="text-bold">TOKEN</span>
+            </a>
+          </h1>
+        </div>
+        <!--//branding-->
 
-	Esta página presenta a playground ........
+        <a href="http://localhost:4000">Inicio Dev</a> / <a href="https://graphql-mendeley.herokuapp.com/">Inicio Prod</a> / Permiso uso token
 
-	Nota: Esta página es consecuente del login de mendeley... sin embargo se la puede acceder por medio de la url
-	y si no paso por el login, posiblemente no tendra permisos para acceder a los recursos del API, por favor asegurese
-	de ingresar desde el botón PROBAR API desde la página de inicio del API. Si recarga la página asegurese de no
-	modificar
-	la url inicial ya que puede modificar el token y guardar un token inválido
+      </div>
+      <!--//container-->
+    </header>
+    <!--//header-->
 
-	Para poder usar la API GraphQL, debe dar permiso de uso de su token de acceso para poder hacer llamadas a la API,
-	este
-	token se guardará en una cookie.
+    <div class="doc-wrapper">
+      <div class="container">
 
-	<button onclick="setCookie()">Permitir (Guardar cookie)</button>
+        <div class="doc-body row">
+          <div class="doc-content col-md-12 col-12 order-1">
+            <div class="content-inner">
+              <section id="dashboards" class="doc-section">
+                <div class="alert alert-danger" role="alert">
+                      <p class="text-muted"><small><strong>Importante:</strong> Esta página debe ser cargada unicamente después de proporcionar las credenciales de Elsevier mediante el botón "PROBAR API" que se encuentra en la página de inicio, si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido</small></p> 
+                    </div>
+                 
+                <h2 class="section-title">Permiso de uso de token</h2>
+                <div class="section-block">
+                  <p>Para poder usar la API GraphQL Mendeley, debe proporcionar el permiso de uso del token generado con sus credenciales de Elsevier. Este token se almacenará en una cookie y servirá para realizar las peticiones a los recursos de Mendeley. Por favor asegurese de presionar el botón Permitir para usar la API. Puede usar GraphQL Playground (Desarrollador) o la prueba de concepto (General) disponibles para probar la API</p>
+                  
+                  <center>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="setCookie()">Permitir</button> </br></br></br>
 
-	<button onclick="checkCookie()">Ver cookie</button>
+                  <a href="playground" title="">
+                    <img class="img-fluid" src="img/logo-playgroud.png" alt="">
+                  </a>
 
-	<a href="playground" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API</a>
+                  <a href="#" title="">
+                    <img class="img-fluid" src="img/logo-prueba-concepto.png" alt="">
+                  </a>
+                </center>
+                </div>
+                <!--//section-block-->
 
-	Para ver información de la sesión actual, puede realizar una consulta en
+              </section>
+              <!--//doc-section-->
 
-	<br>
-	--- Para los errores
-	Los valores no válidos para scopey response_typese envían a la página de redireccionamiento de su aplicación. Una
-	cadena de consulta HTTP contiene los campos errore error_descriptionindica la naturaleza del error.
+              <section id="app-components" class="doc-section">
 
-	http://localhost/mendeley/sample.html?error=unsupported_grant_type&error_description=Invalid+response+type
-	Su aplicación debe informar el error de autorización al usuario, explicar por qué se produjo un error y sugerir
-	posibles soluciones.
+              </section>
+              <!--//doc-section-->
+
+            </div>
+            <!--//content-inner-->
+          </div>
+          <!--//doc-content-->
+         
+          <!--//doc-sidebar-->
+        </div>
+        <!--//doc-body-->
+      </div>
+      <!--//container-->
+    </div>
+    <!--//doc-wrapper-->
+
+  </div>
+  <!--//page-wrapper-->
+
+  <footer id="footer" class="footer text-center">
+    <div class="container">
+      <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+      <small class="copyright">Copyright © UTN-CISIC GraphQL's Project 2019 (Original: Designed with <i class="fa fa-heart"></i> by <a href="https://themes.3rdwavemedia.com/"
+          target="_blank">Xiaoying Riley</a> for developers)modified</small>
+    </div>
+    <!--//container-->
+  </footer>
+  <!--//footer-->
+
+  <!-- Main Javascript -->
+  <script type="text/javascript" src="assets/plugins/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="assets/js/main.js"></script>
+
+  <script src="vendor/chart.js/Chart.min.js"></script>
+
 </body>
-
 </html>
