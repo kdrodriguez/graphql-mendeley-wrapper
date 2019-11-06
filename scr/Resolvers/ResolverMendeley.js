@@ -55,20 +55,20 @@ const resolversMendeley = {
         document_identifiers_types: (context) => { return getDocument_identifiers_types(context.request.cookies.token)  },
         files: (parent, args, context) => {return getFiles(parent, args, context.request.cookies.token);},
         file: (parent, args, context) => {return getFile(parent, args, context.request.cookies.token);}, // Descarga de archivo
-        folders: (parent, args, context) => {console.log("Last Token Folders: ", context.request.cookies.token); return getFolders(parent, args, context.request.cookies.token);},
+        folders: (parent, args, context) => {return getFolders(parent, args, context.request.cookies.token);},
         folder: (parent, args, context) => {return getFolder(parent, args, context.request.cookies.token);},
-        groups: (parent, args, context) => {console.log("Last Token Groups: ", context.request.cookies.token); return getGroups(parent, args, context.request.cookies.token);},
+        groups: (parent, args, context) => {return getGroups(parent, args, context.request.cookies.token);},
         group: (parent, args, context) => {return getGroup(parent, args, context.request.cookies.token);},
         profileMe: (parent, args, context) => {return getProfileMe(parent, args, context.request.cookies.token);},
     },
     Folder: {
-        documents: (parent, context) => {
+        documents: (parent, args, context) => {
             const {id} = parent
             return fetch(`${baseURL}/documents?limit=100&folder_id=${id}`, {headers: {'Authorization': `bearer ${context.request.cookies.token}`}}).then(res => res.json())
         }
     },
     Group: {
-        folders: (parent, context) =>{
+        folders: (parent, args, context) =>{
             const {id} = parent
             return fetch(`${baseURL}/folders?limit=100&group_id=${id}`, {headers: {'Authorization': `bearer ${context.request.cookies.token}`}}).then(res => res.json())
         }

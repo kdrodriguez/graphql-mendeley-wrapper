@@ -13,19 +13,14 @@ const resolvers = require('./Resolvers/');
 const { pool } = require("../scr/DataBase/cnn");
 
 const server = new GraphQLServer({
-  //typeDefs: './Schema/schema.graphql',  // DEV
-  typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
+  typeDefs: process.env.NODE_ENV === "production" ? 'scr/Schema/schema.graphql': './Schema/schema.graphql',
+  //typeDefs:  './Schema/schema.graphql',  // DEV
+  //typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
   resolvers,
-  headers: {
-    "Access-Control-Allow-Origin": "*" // Required for CORS support to work
-  },
-  /*context: ({ response, ...rest }) => {
-    //var params = url.parse(request.url,true).query;  console.log(params.token);
-    return {
-      response,
-      access_token: "ffff"
-      Hola: 'aaaaa'
-    };
+  /*headers: {
+    "Access-Control-Allow-Origin": "*" ,// Required for CORS support to work
+    'Access-Control-Allow-Methods': 'DELETE, PUT, GET, POST',
+    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
   },*/
   context: (req) => ({ ...req }),
   playground: {
@@ -33,6 +28,14 @@ const server = new GraphQLServer({
       'request.credentials': 'same-origin',  //'request.credentials': 'include'
     }
   },
+   /*context: ({ response, ...rest }) => {
+    //var params = url.parse(request.url,true).query;  console.log(params.token);
+    return {
+      response,
+      access_token: "ffff"
+      Hola: 'aaaaa'
+    };
+  },*/
 })
 
 server.use(body_parser.urlencoded({ extended: true }));
@@ -46,18 +49,15 @@ nunjucks.configure(__dirname + '/public', {
 app.use(express.static(__dirname + '/public'))
 server.express.use(cookieParser())
 
-server.use(cors())  // not having cors enabled will cause an access control error
+//server.use(cors('*'))  // not having cors enabled will cause an access control error
 //server.use(cors('*')) 
 
   /*server.use(  // SERVER CORSSSSS ¨***************
   cors({
     credentials: true,
     origin: "http://localhost:3000"
-  })
-  cors: {
-    credentials: true,
     origin: process.env.FRONTEND_URL
-  }
+  })
   )*/
 
 server.use(express.static(__dirname + '/public'))
@@ -165,14 +165,17 @@ app.get('/Activity', function (req, response) {
   })
 });
 
-const FRONTEND_HOST = "";
-const origin = `http://${FRONTEND_HOST}:4000`;
+//const FRONTEND_HOST = "localhost";
+//const origin = `http://${FRONTEND_HOST}:3000`;
 
 const options = {
-  //cors: { credentials: true, origin },
   port: process.env.PORT || 4000,
   endpoint: '/mendeley-graphql',
   playground: '/playground',
+  cors: {
+    credentials: true,
+    origin: true // your frontend url.
+  }
 }
 
 server.start(options, ({ port, playground, endpoint }) => console.log(`El servidor está ejecutandose en http://localhost:${port}`))
