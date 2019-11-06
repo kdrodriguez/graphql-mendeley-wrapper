@@ -1,5 +1,7 @@
-var env = require('node-env-file'); // .env file
-env(__dirname+"/.env");
+if(process.env.NODE_ENV ==! "production"){
+  var env = require('node-env-file'); // .env file
+  env(__dirname+"/.env");
+}
 
 //-------------------------------------------------------------------------------------
 // 1. Información de base de datos para registros de API
