@@ -39,6 +39,11 @@
       }
       //state = params.state;
       token_temp = params.access_token;
+      if (params.access_token) {
+        confirmTokenUse(); // Guardar token en cookie
+      } else {
+        alert("Advertencia: La url ha sido modificada, por favor acceda a esta página proporcionando las credenciales de Mendeley")
+      }
       return params.access_token;
     }
 
@@ -50,6 +55,26 @@
       console.log("token=" + token_temp + ";" + expires + ";path=/");
       document.cookie = "token=" + token_temp + ";" + expires + ";path=/";
       alert("Token guardado");
+    }
+
+    // Método de confirmación de uso de token
+    function confirmTokenUse() {
+      var confirmacion = "Esta página debe ser cargada unicamente después de proporcionar las credenciales de Elsevier mediante el botón 'PROBAR API' que se encuentra en la página de inicio, si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido. Acepte este mensaje para permitir uso del token"
+      if (confirm(confirmacion)) {
+        setCookie();
+      } else {
+        alert("Advertencia: No podrá hacer solicitudes a la API");
+      }
+    }
+
+    // Método para eliminar una cookie
+    function eraseCookie() {
+      if (checkCookie()) {
+        document.cookie = "token" + '=; Max-Age=0'
+        alert("Token eliminado");
+      } else {
+        alert("El token no existe o ya fue eliminado");
+      }
     }
 
     // Método para leer una cookie (NO es usado en la app)
@@ -72,13 +97,9 @@
     function checkCookie() {
       var token = getCookie("token");
       if (token != "") {
-        alert("token cookie: " + token);
+        return true;
       } else {
-        alert("No existe la cookie" );
-        /*token = prompt("Please enter your cookie token:", "");
-        if (token != "" && token != null) {
-          setCookie("token", token, 365);
-        }*/
+        return false;
       }
     }
 
@@ -93,15 +114,26 @@
       <div class="container">
         <div class="branding">
           <h1 class="logo">
-            <a href="index.html">
+            <a href="/">
               <span aria-hidden="true" class="icon_documents_alt icon"></span>
               <span class="text-highlight">API-</span><span class="text-bold">TOKEN</span>
             </a>
           </h1>
+
         </div>
         <!--//branding-->
 
-        <a href="http://localhost:4000">Inicio Dev</a> / <a href="https://graphql-mendeley.herokuapp.com/">Inicio Prod</a> / Permiso uso token
+        <div class="container">
+          <div class="row justify-content-between">
+            <div class="col-4">
+              <a href="/">Inicio</a> / Permiso uso token
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-danger align-self-end" onclick="eraseCookie()">Eliminar
+                token</button>
+            </div>
+          </div>
+        </div>
 
       </div>
       <!--//container-->
@@ -116,24 +148,34 @@
             <div class="content-inner">
               <section id="dashboards" class="doc-section">
                 <div class="alert alert-danger" role="alert">
-                      <p class="text-muted"><small><strong>Importante:</strong> Esta página debe ser cargada unicamente después de proporcionar las credenciales de Elsevier mediante el botón "PROBAR API" que se encuentra en la página de inicio, si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido</small></p> 
-                    </div>
-                 
+                  <p class="text-muted"><small><strong>Importante:</strong> Esta página debe ser cargada unicamente
+                      después de proporcionar las credenciales de Elsevier mediante el botón "PROBAR API" que se
+                      encuentra en la página de inicio, si se accede mediante la url, no se garantiza la obtención del
+                      token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará
+                      un mensaje de error en las solicitudes a la API informando que el token es inválido</small></p>
+                </div>
+
                 <h2 class="section-title">Permiso de uso de token</h2>
                 <div class="section-block">
-                  <p>Para poder usar la API GraphQL Mendeley, debe proporcionar el permiso de uso del token generado con sus credenciales de Elsevier. Este token se almacenará en una cookie y servirá para realizar las peticiones a los recursos de Mendeley. Por favor asegurese de presionar el botón Permitir para usar la API. Puede usar GraphQL Playground (Desarrollador) o la prueba de concepto (General) disponibles para probar la API</p>
-                  
+                  <p>Para poder usar la API GraphQL Mendeley, debe proporcionar el permiso de uso del token generado con
+                    sus credenciales de Elsevier. Este token se almacenará en una cookie y servirá para realizar las
+                    peticiones a los recursos de Mendeley. Por favor asegurese de presionar el botón Permitir para usar
+                    la API. Puede usar GraphQL Playground (Desarrollador) o la prueba de concepto (General) disponibles
+                    para probar la API</p><br>
+
                   <center>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="setCookie()">Permitir</button> </br></br></br>
+                    <p>Elija una de las herramientas</p>
+                    <a href="playground">
+                      <img class="img-fluid" width="200" height="40" src="img/logo-playgroud.png" alt="Playground">
+                    </a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="http://localhost:3000/">
+                      <img class="img-fluid" width="200" height="40" src="img/logo-prueba-concepto.png"
+                        alt="Prueba de concepto">
+                    </a>
+                    </br><br>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="setCookie()">Permitir</button>
+                  </center>
 
-                  <a href="playground" title="">
-                    <img class="img-fluid" src="img/logo-playgroud.png" alt="">
-                  </a>
-
-                  <a href="#" title="">
-                    <img class="img-fluid" src="img/logo-prueba-concepto.png" alt="">
-                  </a>
-                </center>
                 </div>
                 <!--//section-block-->
 
@@ -149,7 +191,7 @@
             <!--//content-inner-->
           </div>
           <!--//doc-content-->
-         
+
           <!--//doc-sidebar-->
         </div>
         <!--//doc-body-->
@@ -164,8 +206,9 @@
   <footer id="footer" class="footer text-center">
     <div class="container">
       <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
-      <small class="copyright">Copyright © UTN-CISIC GraphQL's Project 2019 (Original: Designed with <i class="fa fa-heart"></i> by <a href="https://themes.3rdwavemedia.com/"
-          target="_blank">Xiaoying Riley</a> for developers)modified</small>
+      <small class="copyright">Copyright © UTN-CISIC GraphQL's Project 2019 (Original: Designed with <i
+          class="fa fa-heart"></i> by <a href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for
+        developers)modified</small>
     </div>
     <!--//container-->
   </footer>
@@ -180,4 +223,5 @@
   <script src="vendor/chart.js/Chart.min.js"></script>
 
 </body>
+
 </html>
