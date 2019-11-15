@@ -17,11 +17,6 @@ const server = new GraphQLServer({
   //typeDefs:  './Schema/schema.graphql',  // DEV
   //typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
   resolvers,
-  /*headers: {
-    "Access-Control-Allow-Origin": "*" ,// Required for CORS support to work
-    'Access-Control-Allow-Methods': 'DELETE, PUT, GET, POST',
-    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-  },*/
   context: (req) => ({ ...req }),
   playground: {
     settings: {
