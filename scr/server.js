@@ -21,7 +21,7 @@ const server = new GraphQLServer({
   playground: {
     settings: {
       'request.credentials': 'same-origin',  //'request.credentials': 'include'
-    }
+    },
   },
    /*context: ({ response, ...rest }) => {
     //var params = url.parse(request.url,true).query;  console.log(params.token);

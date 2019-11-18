@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>GraphQL Mendeley API Activity</title>
+  <title>GraphQL Mendeley API Token</title>
   <!-- Meta -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,41 +27,50 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-  <script>
-    var token_temp;
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+  <script>
     //Método para extraer el token de la url de devolución proporcionada por la API
-    function getToken() {
+    function processToken() {
       var params = {}, queryString = location.hash.substring(1),
         regex = /([^&=]+)=([^&]*)/g, m;
       while (m = regex.exec(queryString)) {
         params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
       }
       //state = params.state;
-      token_temp = params.access_token;
+      // Verifica si existe el parametro code
+      var code = new URLSearchParams(location.search).get('code');
+      var cont = cont + 1;
+
       if (params.access_token) {
-        confirmTokenUse(); // Guardar token en cookie
+        confirmTokenUse(params.access_token); // Guardar token en cookie
       } else {
-        alert("Advertencia: La url ha sido modificada, por favor acceda a esta página proporcionando las credenciales de Mendeley")
+        if (code) {
+          changeCodeForToken(code); //Intercambio del código de autorización por un token de acceso
+        } else {
+          if (params.delete_token) {
+              eraseCookie();
+          } else {
+            alert("Advertencia: Usted ha accedido a esta página por su URL; si quiere generar un token proporcione primero las credenciales")
+          }
+        }
       }
-      return params.access_token;
     }
 
     // Método que almacena el token en una cookie
-    function setCookie() {
+    function setCookie(aux_token) {
       var d = new Date();
       d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
       var expires = "expires=" + d.toUTCString();
-      console.log("token=" + token_temp + ";" + expires + ";path=/");
-      document.cookie = "token=" + token_temp + ";" + expires + ";path=/";
-      alert("Token guardado");
+      console.log("token=" + aux_token + ";" + expires + ";path=/");
+      document.cookie = "token=" + aux_token + ";" + expires + ";path=/";
     }
 
     // Método de confirmación de uso de token
-    function confirmTokenUse() {
-      var confirmacion = "Esta página debe ser cargada unicamente después de proporcionar las credenciales de Elsevier mediante el botón 'PROBAR API' que se encuentra en la página de inicio, si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido. Acepte este mensaje para permitir uso del token"
+    function confirmTokenUse(aux_token) {
+      var confirmacion = "Esta página debe ser cargada unicamente después de proporcionar las credenciales de Mendeley mediante el botón 'PROBAR API' que se encuentra en la página de inicio, y no debe ser recargada; si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido. Acepte este mensaje para permitir uso del token"
       if (confirm(confirmacion)) {
-        setCookie();
+        setCookie(aux_token);
       } else {
         alert("Advertencia: No podrá hacer solicitudes a la API");
       }
@@ -103,21 +112,51 @@
       }
     }
 
+    // Método que intercambia el código de autorización por un token de acceso
+    function changeCodeForToken(aux_code) {
+      console.log(aux_code)
+      var confirmacion = "Esta página debe ser cargada unicamente después de proporcionar las credenciales de Mendeley mediante el botón 'PROBAR API' que se encuentra en la página de inicio, y no debe ser recargada; si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido. Acepte este mensaje para permitir uso del token"
+      if (confirm(confirmacion)) {
+        var url = 'https://api.mendeley.com/oauth/token';
+        const paramss = new URLSearchParams();
+        paramss.append('grant_type', 'authorization_code');
+        paramss.append('code', aux_code + "");
+        paramss.append('state', '692055100728.785');
+        //paramss.append('redirect_uri', 'https://graphql-mendeley.herokuapp.com/confirmAuth');
+        paramss.append('redirect_uri', 'http://localhost:4000/confirmAuth');
+        axios.post(url, paramss, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          auth: {
+            //username: '7540',
+            //password: 'cs3g8ntyT7pvtVkN'
+            username: '6783',
+            password: 'IjQU4AbMRuoV41JC'
+          }
+        }).then(function (response) {
+          console.log(response.data.access_token);
+          setCookie(response.data.access_token);
+        }).catch(function (error) {
+          console.log("El error es: ", error);
+          alert("Error: Asegurese de no cambiar la url de redirección, por favor vuelva a proporcionar las credenciales de Mendeley en la página anterior", error);
+        });
+      } else {
+        alert("Advertencia: No podrá hacer solicitudes a la API");
+      }
+    }
   </script>
-
 </head>
 
-<body class="body-pink" onload="getToken();">
+<body class="body-pink" onload="processToken();">
   <div class="page-wrapper">
     <!-- ******Header****** -->
     <header id="header" class="header">
       <div class="container">
         <div class="branding">
           <h1 class="logo">
-            <a href="/">
-              <span aria-hidden="true" class="icon_documents_alt icon"></span>
-              <span class="text-highlight">API-</span><span class="text-bold">TOKEN</span>
-            </a>
+            <span aria-hidden="true" class="icon_documents_alt icon"></span>
+            <span class="text-highlight">API-</span><span class="text-bold">TOKEN</span>
           </h1>
 
         </div>
@@ -131,6 +170,8 @@
             <div class="col-4">
               <button type="button" class="btn btn-danger align-self-end" onclick="eraseCookie()">Eliminar
                 token</button>
+              <a href="https://api.mendeley.com/oauth/authorize?client_id=7540&redirect_uri=https://graphql-mendeley.herokuapp.com/confirmAuth&response_type=code&scope=all&state=692055100728.785"
+                class="btn btn-info align-self-end text-white">Obtener otro token</a>
             </div>
           </div>
         </div>
@@ -151,29 +192,25 @@
                   <p class="text-muted"><small><strong>Importante:</strong> Esta página debe ser cargada unicamente
                       después de proporcionar las credenciales de Elsevier mediante el botón "PROBAR API" que se
                       encuentra en la página de inicio, si se accede mediante la url, no se garantiza la obtención del
-                      token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará
+                      token, o se asume que no requiere la obtención del token de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará
                       un mensaje de error en las solicitudes a la API informando que el token es inválido</small></p>
                 </div>
 
-                <h2 class="section-title">Permiso de uso de token</h2>
+                <h2 class="section-title">Uso de token</h2>
                 <div class="section-block">
-                  <p>Para poder usar la API GraphQL Mendeley, debe proporcionar el permiso de uso del token generado con
-                    sus credenciales de Elsevier. Este token se almacenará en una cookie y servirá para realizar las
-                    peticiones a los recursos de Mendeley. Por favor asegurese de presionar el botón Permitir para usar
-                    la API. Puede usar GraphQL Playground (Desarrollador) o la prueba de concepto (General) disponibles
-                    para probar la API</p><br>
+                  <p>Usted ha proporcionado permiso de uso del token generado por medio de sus credenciales de Mendeley para hacer peticiones 
+                    a la API GraphQL Mendeley, si por algún motivo no desea brindar este permiso puede eliminar el token. Puede usar GraphQL 
+                    Playground (Desarrollador) o la prueba de concepto (Público general) disponibles para probar la API</p><br>
 
                   <center>
                     <p>Elija una de las herramientas</p>
-                    <a href="playground">
+                    <a href="playground" target="_blank">
                       <img class="img-fluid" width="200" height="40" src="img/logo-playgroud.png" alt="Playground">
                     </a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <a href="http://localhost:3000/">
+                    <a href="https://test-concept-gmw.herokuapp.com/" target="_blank">
                       <img class="img-fluid" width="200" height="40" src="img/logo-prueba-concepto.png"
                         alt="Prueba de concepto">
                     </a>
-                    </br><br>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="setCookie()">Permitir</button>
                   </center>
 
                 </div>
@@ -216,6 +253,7 @@
 
   <!-- Main Javascript -->
   <script type="text/javascript" src="assets/plugins/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>
   <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
   <script type="text/javascript" src="assets/js/main.js"></script>

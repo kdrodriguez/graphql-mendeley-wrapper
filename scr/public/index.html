@@ -29,9 +29,12 @@
       <div class="container">
         <h2 class="masthead-heading mb-0">MENDELEY</h12>
         <h3 class="masthead-subheading mb-0">API GraphQL</h3>
+        <h5>Envoltorio GraphQL del API Rest Mendeley</h5>
         <a href="playground" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API</a> 
-        <a href="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http%3A%2F%2Flocalhost:4000%2FconfirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session DEV</a>
-        <a href="https://api.mendeley.com/oauth/authorize?client_id=7540&redirect_uri=https://graphql-mendeley.herokuapp.com/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API session PROD</a>
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http%3A%2F%2Flocalhost:4000%2FconfirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API DEV Implicit</a>
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=6783&redirect_uri=http://localhost:4000/confirmAuth&response_type=code&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API DEV Code Authorization</a>
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=7540&redirect_uri=https://graphql-mendeley.herokuapp.com/confirmAuth&response_type=token&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API PROD Implicit</a>
+        <a href="https://api.mendeley.com/oauth/authorize?client_id=7540&redirect_uri=https://graphql-mendeley.herokuapp.com/confirmAuth&response_type=code&scope=all&state=692055100728.785" class="btn btn-primary btn-xl rounded-pill mt-4">Probar la API PROD Code Authorization</a>
       </div>
     </div>
   </header>
@@ -83,7 +86,7 @@
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
             <h2 class="display-4">IDE GraphQL Playground</h2>
-            <p>Haga consultas personalizadas con el IDE gráfico e interactivo <a href="playground"> GraphQL Playground </a></p>
+            <p>Haga consultas personalizadas con el IDE gráfico e interactivo <a href="playground" target="_blank"> GraphQL Playground </a>. Escoja esta opción solo si tiene un token válido antes del tiempo de caducidad del mismo por que será redirigido directamente a Playground</p>
           </div>
         </div>
       </div>
@@ -103,7 +106,7 @@
         <div class="col-lg-6">
           <div class="p-5">
             <h2 class="display-4">Actividad de la API</h2>
-            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="activity">Ir al detalle de actividad PROD</a></p>
+            <p>Puede ver reportes personalizados de quienes están usando la API, además de los recursos y las operaciones más solicitadas. <a href="activity">Ir al detalle de actividad</a></p>
           </div>
         </div>
       </div>
