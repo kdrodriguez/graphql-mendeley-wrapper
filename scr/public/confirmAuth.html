@@ -114,7 +114,6 @@
 
     // Método que intercambia el código de autorización por un token de acceso
     function changeCodeForToken(aux_code) {
-      console.log(aux_code)
       var confirmacion = "Esta página debe ser cargada unicamente después de proporcionar las credenciales de Mendeley mediante el botón 'PROBAR API' que se encuentra en la página de inicio, y no debe ser recargada; si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido. Acepte este mensaje para permitir uso del token"
       if (confirm(confirmacion)) {
         var url = 'https://api.mendeley.com/oauth/token';
@@ -122,17 +121,14 @@
         paramss.append('grant_type', 'authorization_code');
         paramss.append('code', aux_code + "");
         paramss.append('state', '692055100728.785');
-        //paramss.append('redirect_uri', 'https://graphql-mendeley.herokuapp.com/confirmAuth');
-        paramss.append('redirect_uri', 'http://localhost:4000/confirmAuth');
+        paramss.append('redirect_uri', 'https://graphql-mendeley.herokuapp.com/confirmAuth');
         axios.post(url, paramss, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           auth: {
-            //username: '7540',
-            //password: 'cs3g8ntyT7pvtVkN'
-            username: '6783',
-            password: 'IjQU4AbMRuoV41JC'
+            username: '7540',
+            password: 'cs3g8ntyT7pvtVkN'
           }
         }).then(function (response) {
           console.log(response.data.access_token);
