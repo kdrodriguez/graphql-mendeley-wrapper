@@ -65,6 +65,10 @@ server.get('/confirmAuth', function (req, res) {
   res.sendFile(__dirname + '/public/confirmAuth.html');
 });
 
+server.get('/indexx', function (req, res) {
+  res.sendFile(__dirname + '/public/index_v2.html');
+});
+
 app.get('/Activity', function (req, response) {
   //res.sendFile(__dirname+"/public/activity.html");
   const queryOperation = 'SELECT public.user.display_name_user, operation_action.type_resource, operation_action.type_operation, operation_action.graphql_operation FROM operation_action JOIN public.user ON (operation_action.id_user = public.user.id_user) ORDER BY type_resource';

@@ -121,22 +121,32 @@
         paramss.append('grant_type', 'authorization_code');
         paramss.append('code', aux_code + "");
         paramss.append('state', '692055100728.785');
-        paramss.append('redirect_uri', 'https://graphql-mendeley.herokuapp.com/confirmAuth');
+        //paramss.append('redirect_uri', 'https://graphql-mendeley.herokuapp.com/confirmAuth');
+        paramss.append('redirect_uri', 'http://localhost:4000/confirmAuth');
         axios.post(url, paramss, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           auth: {
-            username: '7540',
-            password: 'cs3g8ntyT7pvtVkN'
+            //username: '7540',
+            //password: 'cs3g8ntyT7pvtVkN'
+            username: '6783',
+            password: 'IjQU4AbMRuoV41JC'
           }
         }).then(function (response) {
           console.log(response.data.access_token);
           setCookie(response.data.access_token);
+          if (history.pushState) {
+            window.history.pushState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
+            //window.history.replaceState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
+          } else {
+            document.location.href = "/confirmAuth";
+          }
         }).catch(function (error) {
           console.log("El error es: ", error);
           alert("Error: Asegurese de no cambiar la url de redirección, por favor vuelva a proporcionar las credenciales de Mendeley en la página anterior", error);
         });
+       
       } else {
         alert("Advertencia: No podrá hacer solicitudes a la API");
       }
