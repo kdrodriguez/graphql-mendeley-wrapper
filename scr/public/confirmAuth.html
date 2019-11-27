@@ -147,8 +147,8 @@
           console.log(response.data.access_token);
           setCookie(response.data.access_token);
           //if (history.pushState) {
-          window.history.pushState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
-          //  //window.history.replaceState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
+          //window.history.pushState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
+          window.history.replaceState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
           //} else {
           //  document.location.href = "/confirmAuth";
           // }
