@@ -55,6 +55,6 @@ Existe una implementación de prueba la cual consume esta API; esta implementaci
 [API GraphQL Mendeley]: https://graphql-mendeley.herokuapp.com/
 [demo prueba de concepto]: https://test-concept-gmw.herokuapp.com/
 [React.js]: https://es.reactjs.org/
-[Apollo]: https://www.apollographql.com/docs/react/
+[Apollo Client]: https://www.apollographql.com/docs/react/
 [Relay]: https://relay.dev/
 [Post]: https://medium.com/open-graphql/exploring-different-graphql-clients-d1bc69de305f
