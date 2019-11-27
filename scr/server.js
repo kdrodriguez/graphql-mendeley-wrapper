@@ -40,7 +40,6 @@ var app = server.express;
 nunjucks.configure(__dirname + '/public', {
   express: app
 });
-//app.listen(process.env.PORT || 4001);
 app.use(express.static(__dirname + '/public'))
 server.express.use(cookieParser())
 
@@ -61,8 +60,16 @@ server.get('/index', function (req, res) { // SE LO PODRIA QUITAR YA QUE NO INTE
   res.sendFile(__dirname + '/public/index.html');
 });
 
-server.get('/confirmAuth', function (req, res) {
-  res.sendFile(__dirname + '/public/confirmAuth.html');
+//server.get('/confirmAuth', function (req, res) {
+//  res.sendFile(__dirname + '/public/confirmAuth.html');
+//});
+
+server.get('/confirmAuth', function (req, response) {
+  response.render('confirmAuth.html', {
+          username: process.env.usernameAPI,
+          password: process.env.passwordAPI,
+          state: process.env.stateAPI
+        });
 });
 
 server.get('/indexx', function (req, res) {
@@ -163,9 +170,6 @@ app.get('/Activity', function (req, response) {
     // pool.end()
   })
 });
-
-//const FRONTEND_HOST = "localhost";
-//const origin = `http://${FRONTEND_HOST}:3000`;
 
 const options = {
   port: process.env.PORT || 4000,

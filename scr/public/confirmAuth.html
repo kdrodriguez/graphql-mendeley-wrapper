@@ -29,9 +29,9 @@
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  <script>
+   <script>
     //Método para extraer el token de la url de devolución proporcionada por la API
-    function processToken() {
+    function processToken() {    
       var params = {}, queryString = location.hash.substring(1),
         regex = /([^&=]+)=([^&]*)/g, m;
       while (m = regex.exec(queryString)) {
@@ -40,7 +40,6 @@
       //state = params.state;
       // Verifica si existe el parametro code
       var code = new URLSearchParams(location.search).get('code');
-      var cont = cont + 1;
 
       if (params.access_token) {
         confirmTokenUse(params.access_token); // Guardar token en cookie
@@ -116,6 +115,15 @@
     function changeCodeForToken(aux_code) {
       var confirmacion = "Esta página debe ser cargada unicamente después de proporcionar las credenciales de Mendeley mediante el botón 'PROBAR API' que se encuentra en la página de inicio, y no debe ser recargada; si se accede mediante la url, no se garantiza la obtención del token, de la misma manera si no da permiso de uso del token o si se edita la url inicial, generará un mensaje de error en las solicitudes a la API informando que el token es inválido. Acepte este mensaje para permitir uso del token"
       if (confirm(confirmacion)) {
+
+        //if(process.env.NODE_ENV === "production"){ // Verificar entorno Producción o desarrollo
+        //  }else{
+        //    var env = require('node-env-file'); // .env file
+        //    env(__dirname+"/.env");
+        //  }
+        console.log("CODE: ", aux_code)
+
+
         var url = 'https://api.mendeley.com/oauth/token';
         const paramss = new URLSearchParams();
         paramss.append('grant_type', 'authorization_code');
@@ -129,19 +137,21 @@
           },
           auth: {
             username: '7540',
-            password: 'cs3g8ntyT7pvtVkN'
+            password: 'OriUY5b0NH1yD7Su'
+            //username: process.env.username || '6783'
+            //password: process.env.password || 'IjQU4AbMRuoV41JC'
             //username: '6783',
             //password: 'IjQU4AbMRuoV41JC'
           }
         }).then(function (response) {
           console.log(response.data.access_token);
           setCookie(response.data.access_token);
-          if (history.pushState) {
-            window.history.pushState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
-            //window.history.replaceState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
-          } else {
-            document.location.href = "/confirmAuth";
-          }
+          //if (history.pushState) {
+          //  window.history.pushState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
+          //  //window.history.replaceState("changeURLPage", "GraphQL Mendeley API Token", "/confirmAuth");
+          //} else {
+          //  document.location.href = "/confirmAuth";
+          // }
         }).catch(function (error) {
           console.log("El error es: ", error);
           alert("Error: Asegurese de no cambiar la url de redirección, por favor vuelva a proporcionar las credenciales de Mendeley en la página anterior", error);
@@ -155,12 +165,14 @@
 </head>
 
 <body class="body-pink" onload="processToken();">
+ 
   <div class="page-wrapper">
     <!-- ******Header****** -->
     <header id="header" class="header">
       <div class="container">
         <div class="branding">
           <h1 class="logo">
+            <input type="hidden" id="pass" name="pass" value={{password}}>
             <span aria-hidden="true" class="icon_documents_alt icon"></span>
             <span class="text-highlight">API-</span><span class="text-bold">TOKEN</span>
           </h1>
