@@ -3,6 +3,8 @@
    **************/
 
 const { GraphQLServer } = require('graphql-yoga')
+const expressPlayground = require('graphql-playground-middleware-express')
+  .default
 var url = require('url');
 var body_parser = require('body-parser');
 var cookieParser = require('cookie-parser')
@@ -17,12 +19,7 @@ const server = new GraphQLServer({
   //typeDefs:  './Schema/schema.graphql',  // DEV
   //typeDefs: 'scr/Schema/schema.graphql',  // PROD (HEROKU)
   resolvers,
-  context: (req) => ({ ...req }),
-  playground: {
-    settings: {
-      'request.credentials': 'same-origin',  //'request.credentials': 'include'
-    },
-  },
+  context: (req) => ({ ...req })
    /*context: ({ response, ...rest }) => {
     //var params = url.parse(request.url,true).query;  console.log(params.token);
     return {
@@ -171,17 +168,24 @@ app.get('/Activity', function (req, response) {
   })
 });
 
+app.get('/playground', expressPlayground(
+  { 
+    endpoint: '/mendeley-graphql',
+    settings: {
+      'request.credentials': 'same-origin',  //'request.credentials': 'same-origin'
+    },
+  }))
+
 const options = {
   port: process.env.PORT || 4000,
   endpoint: '/mendeley-graphql',
-  playground: '/playground',
   cors: {
     credentials: true,
     origin: true // your frontend url.
   }
 }
 
-server.start(options, ({ port, playground, endpoint }) => console.log(`El servidor está ejecutandose en http://localhost:${port}`))
+server.start(options, ({ port, endpoint }) => console.log(`El servidor está ejecutandose en http://localhost:${port}`))
 
 //server.start(() => console.log(`El servidor está ejecutandose en http://localhost:4000`)) 
 //************************************************************************************
