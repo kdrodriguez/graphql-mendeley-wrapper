@@ -5,6 +5,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 const expressPlayground = require('graphql-playground-middleware-express')
   .default
+const { graphiqlExpress } = require('apollo-server-express');
 var url = require('url');
 var body_parser = require('body-parser');
 var cookieParser = require('cookie-parser')
@@ -175,6 +176,12 @@ app.get('/playground', expressPlayground(
       'request.credentials': 'same-origin',  //'request.credentials': 'same-origin'
     },
   }))
+
+app.use('/graphiql', graphiqlExpress({
+    endpointURL: '/mendeley-graphql',
+    query: 'query{profileMe{display_name}}',
+    rewriteURL: true
+}));
 
 const options = {
   port: process.env.PORT || 4000,
