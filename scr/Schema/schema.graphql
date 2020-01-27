@@ -178,7 +178,7 @@ type Folder{
   modified: String
   name: String!
   parent_id: String
-  documents: [Document]
+  documents(view: String, limit: String): [Document]
 }
 
 input FolderInput{

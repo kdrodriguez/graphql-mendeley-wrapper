@@ -6,6 +6,7 @@ const { token, baseURL } = require('../config');
 // -------------- D O C U M E N T O S ---------------------------------------------
 async function getDocuments(parent, args, access_token) {
     var {order, view, limit, group_id, sort, folder_id} = args;
+
     // -- Valores por defecto de los parámetros -- 
     var viewParameter = "&view="  //Valor por defecto cuando se solicita una vista
     var group_id_Parameter = "&group_id="  //Valor por defecto cuando se solicita un grupo
@@ -23,7 +24,7 @@ async function getDocuments(parent, args, access_token) {
     //for (var k of res.headers.keys()) {console.log('res.headers.get("' + k + '") =', res.headers.get(k));}
     //console.log('response =', response); for (var k of response.headers.keys()) {console.log('response.headers.get("' + k + '") =', response.headers.get(k));}
 
-    return await fetch(`${baseURL}/documents?limit=${limit}${viewParameter}${view}&order=${order}&sort=${sort}${group_id_Parameter}${group_id}${folder_id_Parameter}${folder_id}`, {headers: {'Authorization': `bearer ${access_token}`}})
+    return await fetch(`${baseURL}/documents?limit=${limit}${viewParameter}${view}&order=${order}&sort=${sort}${group_id_Parameter}${group_id}${folder_id_Parameter}${folder_id}`, {headers: {'Authorization': `bearer ${access_token}`,'Accept': `application/vnd.mendeley-document-with-files-list+json`, 'Content-Type': `application/vnd.mendeley-document-with-files-list+json`}})
     .then( res => res.text())
     .then( data => buildResponse(data))
     .then( data => setResponse(data, "get",["document-list", 'document', 'GET', 'Q'], access_token));
@@ -42,7 +43,6 @@ async function getDocument(parent, args, access_token) {
         var viewParameter = "";
         view = "";
     }
-   // console.log(`${baseURL}/documents/${id}${viewParameter}${view}`)
     return await fetch(`${baseURL}/documents/${id}${viewParameter}${view}`, {headers: {'Authorization': `bearer ${access_token}`,'Accept': `application/vnd.mendeley-document-with-files-list+json`, 'Content-Type': `application/vnd.mendeley-document-with-files-list+json`}})
     .then( res => res.text())
     .then( data => buildResponse(data))
@@ -77,13 +77,25 @@ async function deleteDocument(parent, args, access_token){
 }
 
 async function getDocumentsFolder(parent, args, access_token){
-    var {folder_id, view} = args
+
+    var {view, limit} = args
+    var {id} = parent
+    var {group_id} = parent
+    //console.log('id_folder ', id);
+
+    if (limit + "" === "undefined") {limit = "20";}
+    var group_idParameter = "&group_id="
+    if (group_id + "" === "undefined") {group_idParameter=""; group_id = "";}
     var viewParameter = "&view="
     if (view + "" === "undefined") {var viewParameter = ""; view = "";}
-    return fetch(`${baseURL}/documents?limit=100&${viewParameter}${view}&folder_id=${folder_id}`, {headers: {'Authorization': `bearer ${access_token}`}})
-    .then( res => res.text())
-    .then( data => buildResponse(data))
-    .then( data => setResponse(data, "get",[folder_id, 'documents-folder', 'GET', 'Q'], access_token));
+    //return fetch(`${baseURL}/documents?limit=100&${viewParameter}${view}&folder_id=${folder_id}`, {headers: {'Authorization': `bearer ${access_token}`}})
+    //return fetch(`${baseURL}/documents?limit=${limit}${viewParameter}${view}&folder_id=${id}`, {headers: {'Authorization': `bearer ${access_token}`,'Accept': `application/vnd.mendeley-document-with-files-list+json`, 'Content-Type': `application/vnd.mendeley-document-with-files-list+json`}})
+    //.then( res => res.text())
+    //.then( data => buildResponse(data))
+    //.then( data => setResponse(data, "get",[id, 'documents-folder', 'GET', 'Q'], access_token));
+
+    return fetch(`${baseURL}/documents?limit=${limit}${viewParameter}${view}&folder_id=${id}${group_idParameter}${group_id}`, {headers: {'Authorization': `bearer ${access_token}`,'Accept': `application/vnd.mendeley-document-with-files-list+json`, 'Content-Type': `application/vnd.mendeley-document-with-files-list+json`}})
+    .then(res => res.json())
 }
 
 async function getDocument_types(access_token){

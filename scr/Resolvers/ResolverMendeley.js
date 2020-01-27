@@ -62,15 +62,12 @@ const resolversMendeley = {
         profileMe: (parent, args, context) => {return getProfileMe(parent, args, context.request.cookies.token);},
     },
     Folder: {
-        documents: (parent, args, context) => {
-            const {id} = parent
-            return fetch(`${baseURL}/documents?limit=100&folder_id=${id}`, {headers: {'Authorization': `bearer ${context.request.cookies.token}`}}).then(res => res.json())
-        }
+        documents: (parent, args, context) => {return getDocumentsFolder(parent, args, context.request.cookies.token);}
     },
     Group: {
         folders: (parent, args, context) =>{
             const {id} = parent
-            return fetch(`${baseURL}/folders?limit=100&group_id=${id}`, {headers: {'Authorization': `bearer ${context.request.cookies.token}`}}).then(res => res.json())
+            return  fetch(`${baseURL}/folders?limit=100&group_id=${id}`, {headers: {'Authorization': `bearer ${context.request.cookies.token}`}}).then(res => res.json())
         }
     },
     Mutation: {
