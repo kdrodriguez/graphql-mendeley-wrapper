@@ -21,7 +21,7 @@
     "graphql-server-express": "^1.4.0",
     "graphql-yoga": "^1.17.4",
     "node-env-file": "^0.1.8",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "nunjucks": "^3.2.0",
     "pg": "^7.12.1",
     "pg-promise": "^8.7.4"
